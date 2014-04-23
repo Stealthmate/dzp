@@ -1,26 +1,25 @@
 package com.dzp.game.resourceHandler;
 
-import java.awt.Image;
 import java.net.URL;
 import java.util.Map;
-import javax.swing.ImageIcon;
+import javax.swing.ImageView;
 
 public class GameLevel {
 
     public static Map<GameLevel, String> levels;
-    private final ImageIcon mapImage;
+    private final ImageView mapImage;
     private final com.dzp.game.mechanics.Map mapConfig;
 
     public GameLevel(URL mapImage, URL mapConfig) throws Exception {
         
         this.mapConfig = new com.dzp.game.mechanics.Map(mapConfig);
         
-        ImageIcon m = new ImageIcon(mapImage);
-        this.mapImage = new ImageIcon(
-                m.getImage().getScaledInstance(
+        ImageView m = new ImageView(mapImage);
+        this.mapImage = new ImageView(
+                m..getScaledInstance(
                 m.getIconWidth(),
                 m.getIconHeight(),
-                Image.SCALE_SMOOTH));
+                ImageView.SCALE_SMOOTH));
 
         
     }
@@ -29,7 +28,7 @@ public class GameLevel {
         return this.mapConfig;
     }
     
-    public ImageIcon getMapImage() {
+    public ImageView getMapImage() {
         return mapImage;
     }
 }

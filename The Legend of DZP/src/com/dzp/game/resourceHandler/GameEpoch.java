@@ -1,20 +1,20 @@
 package com.dzp.game.resourceHandler;
 
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
+import android.widget.ImageView;
 
 public class GameEpoch {
 
     private final ArrayList<GameLevel> levels;
-    private ImageIcon characterSkin;
-    private final ImageIcon towerSkin;
+    private ImageView characterSkin;
+    private final ImageView towerSkin;
 
-    public GameEpoch(ImageIcon towerSkin, ArrayList<GameLevel> levels) {
+    public GameEpoch(ImageView towerSkin, ArrayList<GameLevel> levels) {
         this.towerSkin = towerSkin;
         this.levels = levels;
     }
 
-    public ImageIcon getTowerSkin() {
+    public ImageView getTowerSkin() {
         return this.towerSkin;
     }
 

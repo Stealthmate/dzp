@@ -1,6 +1,6 @@
 package com.dzp.game.resourceHandler;
 
-import java.awt.Image;
+import android.widget.ImageView;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 
 public class ResourceLoader {
 
@@ -18,7 +17,7 @@ public class ResourceLoader {
     private static URL resourceURL;
     public static int epochCount;
     public static int levelCountPerEpoch;
-    public static ImageIcon titleBackground;
+    public static ImageView titleBackground;
     public static final Integer loaded;
     public static volatile int progress = 0;
 
@@ -34,10 +33,10 @@ public class ResourceLoader {
                 new InputStreamReader(
                 (BufferedInputStream) resourceURL.openStream()));
 
-        ImageIcon icon = new ImageIcon(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
-        titleBackground = new ImageIcon(
-                icon.getImage()
-                .getScaledInstance(icon.getIconWidth(), icon.getIconHeight() - 64, Image.SCALE_SMOOTH));
+        //ImageView icon = new ImageView(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
+        ImageView icon = new ImageView(null);
+        titleBackground = new ImageView(
+                icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, ImageView.S));
 
         synchronized (loaded) {
             progress += 60;
@@ -69,8 +68,8 @@ public class ResourceLoader {
     ///Read
     private static GameEpoch readEpoch(int n) throws Exception {
 
-        ImageIcon tower, map;
-        tower = new ImageIcon(cl.getResource(FileNames.getPathTo(n, FileNames.towerImage)));
+        ImageView tower, map;
+        tower = new ImageView(cl.getResource(FileNames.getPathTo(n, FileNames.towerImage)));
 
         ArrayList<GameLevel> levels = new ArrayList();
 
