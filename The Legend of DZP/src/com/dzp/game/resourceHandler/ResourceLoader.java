@@ -35,9 +35,9 @@ public class ResourceLoader {
 
         //ImageView icon = new ImageView(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
         ImageView icon = new ImageView(null);
-        titleBackground = new ImageView(
+        /*titleBackground = new ImageView(
                 icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, ImageView.S));
-
+*/
         synchronized (loaded) {
             progress += 60;
             loaded.notifyAll();
@@ -69,7 +69,7 @@ public class ResourceLoader {
     private static GameEpoch readEpoch(int n) throws Exception {
 
         ImageView tower, map;
-        tower = new ImageView(cl.getResource(FileNames.getPathTo(n, FileNames.towerImage)));
+        tower = null;
 
         ArrayList<GameLevel> levels = new ArrayList();
 

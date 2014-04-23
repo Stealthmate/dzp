@@ -1,7 +1,6 @@
 package com.dzp.game.mechanics.mobs;
 
 import android.graphics.Point;
-import javax.swing.ImageIcon;
 import android.widget.ImageView;
 
 public abstract class Mob {
@@ -30,7 +29,7 @@ public abstract class Mob {
         this.position = p;
     }
     
-    public static void setSkin(ImageIcon skin) {
+    public static void setSkin(ImageView skin) {
         Mob.skin = skin;
     }
     

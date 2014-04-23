@@ -2,7 +2,6 @@ package com.dzp.game.gui;
 
 import com.dzp.game.mechanics.EntityManagerThread;
 import com.dzp.game.Dimension;
-import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.dzp.game.resourceHandler.ResourceLoader;
@@ -14,8 +13,8 @@ public class Run {
 
     public static EntityManagerThread manager;
     public static ResourceLoader resources;
-    public static final Dimension ScreenSize =
-            Toolkit.getDefaultToolkit().getScreenSize();
+    public static final Dimension ScreenSize = null;
+            //Toolkit.getDefaultToolkit().getScreenSize();
 
     public static void main(String[] args) throws Exception /*throws LWJGLException **/ {
 
@@ -31,19 +30,5 @@ public class Run {
                
             }
         }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    com.dzp.game.gui.Screen s = new com.dzp.game.gui.Screen(new Dimension(1366, 704));
-                    s.setVisible(true);
-                    new LoaderThread(s.progress).start();
-                    
-                } catch (Exception ex) {
-                    Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-                }            
-            }
-        }).start();
-        
     }
 }
