@@ -31,9 +31,9 @@ public class EntityManagerThread extends Thread {
     }
     public void despawnTower(Tower t) {
         towers.remove(t);
-        
     }
     public void despawnMob(Mob m) {
+        m.despawn();
         mobs.remove(m);
     }
     public void spawnMob(Mob m) {
@@ -62,7 +62,7 @@ public class EntityManagerThread extends Thread {
             //    
             //}
             for(int i=0;i<=mobs.size()-1;i++) {
-                mobs.get(i).act();
+                mobs.get(i).move();
             }
             
             /** TOWERS */        

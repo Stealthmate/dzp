@@ -22,7 +22,7 @@ public class ResourceLoader {
     public static volatile int progress = 0;
 
     static {
-        loaded = new Integer(0);
+        loaded = 0;
     }
 
     public static void load() throws Exception {
@@ -60,9 +60,8 @@ public class ResourceLoader {
         }
     }
 
-    public static CurrentGame createGame(int e, int l) throws IOException {
-
-        return new CurrentGame(epoches.get(e), epoches.get(e).getLevel(l), null);/* Not finished */
+    public static void createGame(int e, int l) throws IOException {
+        CurrentGame.createGame(epoches.get(e), epoches.get(e).getLevel(l), null);/* Not finished */
     }
 
     ///Read
