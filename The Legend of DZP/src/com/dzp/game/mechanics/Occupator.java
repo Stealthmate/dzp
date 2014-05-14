@@ -4,6 +4,8 @@
  */
 package com.dzp.game.mechanics;
 
+import com.dzp.game.mechanics.towers.Tower;
+
 /**
  *
  * @author Madara1233

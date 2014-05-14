@@ -2,16 +2,14 @@ package com.dzp.game.mechanics.mobs;
 
 import android.widget.ImageView;
 import com.dzp.game.Rectangle;
-import com.dzp.game.gui.Run;
 import com.dzp.game.mechanics.Map;
-import com.dzp.game.mechanics.Tile;
+import com.dzp.game.mechanics.towers.Tower;
 import com.dzp.game.resourceHandler.CurrentGame;
 
 public abstract class Mob {
 
-    private static final int COLLIDE_STRUCTURE = 1;
-    private static final int COLLIDE_EMPTY = 2;
-    private static final int NO_COLLIDE = 0;
+    protected static final Tower COLLIDE_EMPTY = Tower.noTower;
+    protected static final Tower NO_COLLIDE = null;
 
     private final int speed;
 
@@ -30,7 +28,8 @@ public abstract class Mob {
         setPreviousPosition(null);
     }
 
-    protected abstract void act(int action);
+    protected abstract void act(Tower ction);
+    
     public void move() {
 
         if(!canMove) {
@@ -77,21 +76,30 @@ public abstract class Mob {
         this.prevPos = null;
     }
 
-    private int willCollide(int x, int y) {
+    private Tower willCollide(int x, int y) {
 
         Map checkMap = CurrentGame.getCurrentGame().getLevel().getMap();
         for (int i = x; i <= x + this.position.width; i++) {
             for (int j = y; j <= y + this.position.height; j++) {
-                switch (checkMap.tileAt(i, j)) {
+                switch (checkMap.getTile(i, j).getOccupator()) {
                     case TOWER:
                     case NEXUS:
-                        return COLLIDE_STRUCTURE;
+                        return checkMap.getTile(i, j).getOccupatorTower();
                     case IMMOVABLE:
                     case EMPTY:
                         return COLLIDE_EMPTY;
                 }
             }
         }
+        
+        Rectangle newPos = new Rectangle(
+                this.position.x+x, 
+                this.position.y+y, 
+                this.position.width, 
+                this.position.height);
+        
+        this.setPosition(newPos);
+        
         return NO_COLLIDE;
     }
 

@@ -4,6 +4,20 @@ import com.dzp.game.Rectangle;
 
 public abstract class Tower {
 
+    public static final Tower noTower = new Tower(new Rectangle(0, 0, 0, 0), 0, 0, 0) {
+
+        @Override
+        public void upgrade() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void fire() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    };
+    
     protected static final Rectangle PolecatPosition = new Rectangle(3, 4, 5, 6);
     protected static final Rectangle PigPosition = new Rectangle(3, 4, 5, 6);
     protected static final Rectangle PandaPosition = new Rectangle(3, 4, 5, 6);
