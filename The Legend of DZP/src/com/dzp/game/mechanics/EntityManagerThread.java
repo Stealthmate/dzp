@@ -1,10 +1,8 @@
 package com.dzp.game.mechanics;
 
 import com.dzp.game.mechanics.mobs.Mob;
-import com.dzp.game.mechanics.towers.PandaMainTower;
-import com.dzp.game.mechanics.towers.PigMainTower;
-import com.dzp.game.mechanics.towers.PolecatMainTower;
 import com.dzp.game.mechanics.towers.Tower;
+import com.dzp.game.resourceHandler.CurrentGame;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,10 +15,7 @@ public class EntityManagerThread extends Thread {
     private int tickCounter;
     private int spawnWave;
     
-    public EntityManagerThread(int towerLevelPig, int towerLevelPolecat, int towerLevelPanda) {
-        towers.add(new PigMainTower(towerLevelPig));
-        towers.add(new PolecatMainTower(towerLevelPolecat));
-        towers.add(new PandaMainTower(towerLevelPanda));
+    public EntityManagerThread() {
         tickCounter = 0;
         spawnWave = 0;
     }
@@ -52,7 +47,7 @@ public class EntityManagerThread extends Thread {
          */
         
         
-        while(Nexus.isAlive()) {
+        while(CurrentGame.getCurrentGame().getNexus().isAlive()) {
             
             /* MOBS */
             if(mobs.isEmpty()) {
@@ -62,7 +57,7 @@ public class EntityManagerThread extends Thread {
             //    
             //}
             for(int i=0;i<=mobs.size()-1;i++) {
-                mobs.get(i).move();
+                mobs.get(i).action();
             }
             
             /** TOWERS */        

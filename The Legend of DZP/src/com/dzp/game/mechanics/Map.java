@@ -1,7 +1,6 @@
 package com.dzp.game.mechanics;
 
 import android.graphics.Point;
-import com.dzp.game.mechanics.towers.Tower;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,7 +32,7 @@ public class Map {
                 } catch (NumberFormatException ex) {
                     System.out.println(begin);
                 }
-                this.tiles.get(i).add(new Tile(Occupator.forNumber(state), new Point(i, j), Tower.noTower));
+                this.tiles.get(i).add(new Tile(Occupator.forNumber(state), new Point(i, j)));
                 begin += 2;
             }
         }

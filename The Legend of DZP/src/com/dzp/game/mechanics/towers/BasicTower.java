@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.dzp.game.mechanics.mobs;
+package com.dzp.game.mechanics.towers;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -13,19 +13,27 @@ import android.graphics.Point;
  *
  * @author madara1233
  */
-public class FastMob extends Mob{
-
-    public FastMob(Point position, int maxHP, int HP, int speed, Bitmap skin) {
-        super(position, HP, maxHP, speed, skin);
-    }
+public class BasicTower extends Tower{
     
+    public BasicTower(
+            Point position,
+            int range,
+            int level,
+            int maxCharge,
+            int cost,
+            int frequency,
+            int damage,
+            Bitmap skin) {
+        super(position, range, level, maxCharge, maxCharge, cost, frequency, damage, skin);
+    }
+
     @Override
-    protected void act(int collision) {
+    public void upgrade() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    protected void drawAct() {
+    public void fire() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

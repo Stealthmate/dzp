@@ -13,9 +13,9 @@ import android.graphics.Point;
  *
  * @author madara1233
  */
-public class FastMob extends Mob{
+public class TankMob extends Mob {
 
-    public FastMob(Point position, int maxHP, int HP, int speed, Bitmap skin) {
+    public TankMob(Point position, int maxHP, int HP, int speed, Bitmap skin) {
         super(position, HP, maxHP, speed, skin);
     }
     

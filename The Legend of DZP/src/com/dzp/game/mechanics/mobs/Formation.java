@@ -13,9 +13,11 @@ import android.graphics.Point;
  *
  * @author madara1233
  */
-public class FastMob extends Mob{
+public class Formation extends Mob{
 
-    public FastMob(Point position, int maxHP, int HP, int speed, Bitmap skin) {
+    
+    //Special, not to take constructor into consideration
+    public Formation(Point position, int maxHP, int HP, int speed, Bitmap skin) {
         super(position, HP, maxHP, speed, skin);
     }
     

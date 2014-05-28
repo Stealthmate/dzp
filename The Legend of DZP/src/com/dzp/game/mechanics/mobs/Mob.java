@@ -1,72 +1,83 @@
 package com.dzp.game.mechanics.mobs;
 
-import android.widget.ImageView;
-import com.dzp.game.Rectangle;
-import com.dzp.game.mechanics.Map;
-import com.dzp.game.mechanics.towers.Tower;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import com.dzp.game.mechanics.Occupator;
 import com.dzp.game.resourceHandler.CurrentGame;
 
 public abstract class Mob {
 
-    protected static final Tower COLLIDE_EMPTY = Tower.noTower;
-    protected static final Tower NO_COLLIDE = null;
+    protected static final int NO_COLLIDE = 0;
+    protected static final int COLLIDE_EMPTY = 1;
+    protected static final int COLLIDE_NEXUS = 2;
 
     private final int speed;
-
-    private Rectangle position;
-    private Rectangle prevPos;
-    private boolean canMove;
     private final int maxHP;
+    private Point position;
+    private Point prevPos;
+    private boolean canMove;
     private int HP;
-    private static ImageView skin;
+    protected final Bitmap skin;
 
-    public Mob(int maxHP, Rectangle position, int speed) {
+    public Mob(Point position, int HP, int maxHP, int speed, Bitmap skin) {
         this.maxHP = maxHP;
         this.speed = speed;
+        this.skin = skin;
         setCanMove(true);
         setPosition(position);
         setPreviousPosition(null);
     }
 
-    protected abstract void act(Tower ction);
-    
-    public void move() {
+    protected abstract void act(int collision);
 
-        if(!canMove) {
+    protected abstract void drawAct();
+
+    public void action() {
+
+        if (!canMove) {
             act(COLLIDE_EMPTY);
         }
-        
+
         int x = this.position.x;
         int y = this.position.y;
         int xp = this.prevPos.x;
         int yp = this.prevPos.y;
 
         int dx = 0, dy = 1;
+        Point[] d = new Point[4];
+        d[0] = new Point(0, speed);
+        d[1] = new Point(0, -speed);
+        d[2] = new Point(speed, 0);
+        d[3] = new Point(-speed, 0);
+        int results[] = {5, 5, 5, 5};
 
-        if (!(x + dx == xp && y + dy == yp)) {
-            act(willCollide(x + dx, y + dy));
+        for (int i = 0; i <= 3; i++) {
+            if (!(x + d[i].x == xp && y + d[i].y == yp)) {
+                results[i] = willCollide(x + d[i].x, y + d[i].y);
+            }
         }
 
-        dx = 0;
-        dy = -1;
+        for (int i = 0; i <= 3; i++) {
+            if (results[i] == NO_COLLIDE) {
 
-        if (!(x + dx == xp && y + dy == yp)) {
-            act(willCollide(x + dx, y + dy));
+                move(d[i].x, d[i].y);
+                act(results[i]);
+            }
         }
-
-        dx = 1;
-        dy = 0;
-
-        if (!(x + dx == xp && y + dy == yp)) {
-            act(willCollide(x + dx, y + dy));
+        for (int i = 0; i <= 3; i++) {
+            if (results[i] == COLLIDE_NEXUS) {
+                act(results[i]);
+            }
         }
+    }
 
-        dx = -1;
-        dy = 0;
+    private void move(int dx, int dy) {
+        setPreviousPosition(this.position);
+        setPosition(new Point(this.position.x + dx, this.position.y + dy));
+        drawMovement();
+    }
 
-        if (!(x + dx == xp && y + dy == yp)) {
-            act(willCollide(x + dx, y + dy));
-        }
+    private void drawMovement() {
 
     }
 
@@ -76,47 +87,34 @@ public abstract class Mob {
         this.prevPos = null;
     }
 
-    private Tower willCollide(int x, int y) {
-
-        Map checkMap = CurrentGame.getCurrentGame().getLevel().getMap();
-        for (int i = x; i <= x + this.position.width; i++) {
-            for (int j = y; j <= y + this.position.height; j++) {
-                switch (checkMap.getTile(i, j).getOccupator()) {
-                    case TOWER:
-                    case NEXUS:
-                        return checkMap.getTile(i, j).getOccupatorTower();
-                    case IMMOVABLE:
-                    case EMPTY:
-                        return COLLIDE_EMPTY;
-                }
-            }
+    private int willCollide(int x, int y) {
+        switch (CurrentGame.getCurrentGame().getMap().getTile(x, y).getOccupator()) {
+            case EMPTY:
+            case IMMOVABLE:
+                return COLLIDE_EMPTY;
+            case NEXUS:
+                return COLLIDE_NEXUS;
+            default:
+                return NO_COLLIDE;
         }
-        
-        Rectangle newPos = new Rectangle(
-                this.position.x+x, 
-                this.position.y+y, 
-                this.position.width, 
-                this.position.height);
-        
-        this.setPosition(newPos);
-        
-        return NO_COLLIDE;
+    }
+
+    private Occupator checkTile(int x, int y) {
+        return CurrentGame.getCurrentGame().getMap().getTile(x, y).getOccupator();
     }
 
     //Set Functions
-    private void setPosition(Rectangle p) {
+    private void setPosition(Point p) {
         setPreviousPosition(this.position);
         this.position = p;
     }
+
     public final void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
-    private void setPreviousPosition(Rectangle p) {
-        this.prevPos = p;
-    }
 
-    public static void setSkin(ImageView skin) {
-        Mob.skin = skin;
+    private void setPreviousPosition(Point p) {
+        this.prevPos = p;
     }
 
     private void setHP(int HP) {
@@ -124,19 +122,19 @@ public abstract class Mob {
     }
 
     //Get Functions
-    public static ImageView getSkin() {
-        return Mob.skin;
+    protected final Bitmap getSkin() {
+        return this.skin;
     }
 
     public int getHP() {
         return this.HP;
     }
 
-    public Rectangle getPreviousPosition() {
+    public Point getPreviousPosition() {
         return this.prevPos;
     }
 
-    public Rectangle getPosition() {
+    public Point getPosition() {
         return this.position;
     }
 }

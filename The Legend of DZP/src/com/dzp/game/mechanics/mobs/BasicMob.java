@@ -5,8 +5,9 @@
 
 package com.dzp.game.mechanics.mobs;
 
-import com.dzp.game.Rectangle;
-import com.dzp.game.mechanics.towers.Tower;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import com.dzp.game.resourceHandler.CurrentGame;
 
 /**
  *
@@ -14,15 +15,22 @@ import com.dzp.game.mechanics.towers.Tower;
  */
 public class BasicMob extends Mob{
 
-    public BasicMob(int maxHP, Rectangle position, int speed) {
-        super(maxHP, position, speed);
+    public BasicMob(Point position, int maxHP, int HP, int speed, Bitmap skin) {
+        super(position, HP, maxHP, speed, skin);
     }
 
     @Override
-    protected void act(Tower collideTower) {
-        if(!collideTower.equals(Tower.noTower)) {
-            //Deal damage and suicide
+    protected void act(int collision) {
+        switch(collision) {
+            case Mob.COLLIDE_NEXUS : {
+                CurrentGame.getCurrentGame().getNexus().strike();
+            }
         }
+    }
+
+    @Override
+    protected void drawAct() {
+        
     }
     
 

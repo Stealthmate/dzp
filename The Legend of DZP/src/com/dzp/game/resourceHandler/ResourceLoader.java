@@ -1,6 +1,7 @@
 package com.dzp.game.resourceHandler;
 
-import android.widget.ImageView;
+import android.graphics.Bitmap;
+import com.dzp.game.DZPgame;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,13 +12,13 @@ import java.util.ArrayList;
 
 public class ResourceLoader {
 
-    public static ArrayList<GameEpoch> epoches;
+    public static ArrayList<GameWorld> epoches;
     private static ClassLoader cl;
     private static BufferedReader resourceReader;
     private static URL resourceURL;
     public static int epochCount;
     public static int levelCountPerEpoch;
-    public static ImageView titleBackground;
+    public static Bitmap titleBackground;
     public static final Integer loaded;
     public static volatile int progress = 0;
 
@@ -33,10 +34,10 @@ public class ResourceLoader {
                 new InputStreamReader(
                 (BufferedInputStream) resourceURL.openStream()));
 
-        //ImageView icon = new ImageView(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
-        ImageView icon = new ImageView(null);
-        /*titleBackground = new ImageView(
-                icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, ImageView.S));
+        //Bitmap icon = new Bitmap(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
+        titleBackground = (Bitmap) DZPgame.get("titleBackground");
+        /*titleBackground = new Bitmap(
+                icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, Bitmap.S));
 */
         synchronized (loaded) {
             progress += 60;
@@ -65,9 +66,9 @@ public class ResourceLoader {
     }
 
     ///Read
-    private static GameEpoch readEpoch(int n) throws Exception {
+    private static GameWorld readEpoch(int n) throws Exception {
 
-        ImageView tower, map;
+        Bitmap tower, map;
         tower = null;
 
         ArrayList<GameLevel> levels = new ArrayList();
@@ -76,7 +77,7 @@ public class ResourceLoader {
             levels.add(readLevel(i, n));
         }
 
-        return new GameEpoch(tower, levels);
+        return new GameWorld(tower, levels);
 
     }
 

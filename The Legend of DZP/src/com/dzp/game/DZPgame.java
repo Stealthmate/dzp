@@ -1,14 +1,13 @@
 package com.dzp.game;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.dzp.game.resourceHandler.CurrentGame;
+import java.util.HashMap;
 
 public class DZPgame extends Activity {
 
@@ -19,7 +18,12 @@ public class DZPgame extends Activity {
     private ImageView image;
     private int current = 0;
     private final BitmapDrawable[] backgrounds = new BitmapDrawable[2];
-
+    private static final HashMap<String, Object> resources = new HashMap();
+    
+    
+    public static Object get(String id) {
+        return resources.get(id);
+    }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,10 +31,7 @@ public class DZPgame extends Activity {
         setContentView(R.layout.main);
         backgrounds[0] = ((BitmapDrawable)getResources().getDrawable(R.drawable.screen1));
         backgrounds[1] = ((BitmapDrawable)getResources().getDrawable(R.drawable.screen2));
-        
-        /*image = (ImageView) findViewById(R.id.background);
-        image.setImageBitmap(backgrounds[current]);
-        image.bringToFront();*/
+        loadResources();
         
     }
 
@@ -38,5 +39,15 @@ public class DZPgame extends Activity {
         LinearLayout l = (LinearLayout) findViewById(R.id.lay);
         current=1-current;
         l.setBackgroundDrawable(backgrounds[current].getCurrent());
+    }
+    
+    private boolean loadResources() {
+        resources.put(
+                "titleBackground", 
+                ((BitmapDrawable) getResources().getDrawable(R.drawable.title_background)).getBitmap());
+        
+        
+        
+        return true;
     }
 }

@@ -1,80 +1,105 @@
 package com.dzp.game.mechanics.towers;
 
-import com.dzp.game.Rectangle;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import com.dzp.game.resourceHandler.CurrentGame;
 
 public abstract class Tower {
 
-    public static final Tower noTower = new Tower(new Rectangle(0, 0, 0, 0), 0, 0, 0) {
-
-        @Override
-        public void upgrade() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void fire() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-    };
-    
-    protected static final Rectangle PolecatPosition = new Rectangle(3, 4, 5, 6);
-    protected static final Rectangle PigPosition = new Rectangle(3, 4, 5, 6);
-    protected static final Rectangle PandaPosition = new Rectangle(3, 4, 5, 6);
+    protected static final int maxLevel = 5;
+    protected final Point position;
+    protected final int maxCharge;
+    protected final int cost;
+    protected final int damage;
+    protected final int frequency;
+    protected final Bitmap skin;
     protected int range;
-    protected final Rectangle position;
     protected int level;
-    protected final int maxLevel = 5;
-    protected final int maxHP;
-    protected int HP;
+    protected int charge;
 
-    protected Tower(Rectangle position, int range, int level, int maxHP) {
+    protected Tower(
+            Point position,
+            int range,
+            int level,
+            int charge,
+            int maxCharge,
+            int cost,
+            int frequency,
+            int damage,
+            Bitmap skin) {
+
         this.position = position;
+        this.maxCharge = maxCharge;
+        this.cost = cost;
+        this.frequency = frequency;
+        this.damage = damage;
+        this.skin = skin;
         setLevel(level);
         setRange(range);
-        this.maxHP = maxHP;
-        setHP(HP);
+        setCharge(charge);
     }
 
     ///Set parameters
     protected final void setRange(int range) {
         this.range = range;
     }
+
     protected final void setLevel(int level) {
         this.level = level;
     }
-    protected final void setHP(int HP) {
-        this.HP = HP;
-    }
-    
-    ///Get parameters
-    public int getRange() {
-        return this.range;
-    }
-    public Rectangle getPosition() {
-        return this.position;
-    }
-    public int getHP() {
-        return this.HP;
+
+    protected final void setCharge(int charge) {
+        this.charge = charge;
     }
 
-    
+    ///Get parameters
+    public final int getRange() {
+        return this.range;
+    }
+
+    public final Point getPosition() {
+        return this.position;
+    }
+
+    public final int getCost() {
+        return this.cost;
+    }
+
+    public final int getDamage() {
+        return this.damage;
+    }
+
+    public final int getFrequency() {
+        return this.frequency;
+    }
+
+    public final int getCharge() {
+        return this.charge;
+    }
+
+    public final int getLevel() {
+        return this.level;
+    }
+
     ///Status updates
     public void despawn() {
-        com.dzp.game.gui.Run.manager.despawnTower(this);
+        CurrentGame.getCurrentGame().manager.despawnTower(this);
     }
 
     public abstract void upgrade();
 
     ///Action
     public boolean hasInRange() {
-        
-        
-        
+
+        for (int x = 0; x <= range; x++) {
+            for (int y = 0; y <= range; y++) {
+                if (x * x + y * y <= range * range) {
+
+                }
+            }
+        }
         return false;
     }
 
     public abstract void fire();
-
-    
 }

@@ -1,38 +1,52 @@
 package com.dzp.game.resourceHandler;
 
+import com.dzp.game.mechanics.EntityManagerThread;
+import com.dzp.game.mechanics.Nexus;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-
 public class CurrentGame {
-    
+
     private static CurrentGame game;
-    
-    private final GameEpoch epoch;
+    private final Nexus nexus;
+    private final GameWorld epoch;
     private final GameLevel level;
+    private final com.dzp.game.mechanics.Map gameMap;
     private final Map<String, Integer> towerUpgrades;
-    
-    public static void createGame(GameEpoch e, GameLevel l, File upgradeList) throws IOException {
+    public final EntityManagerThread manager;
+
+    public static void createGame(GameWorld e, GameLevel l, File upgradeList) throws IOException {
         CurrentGame.game = new CurrentGame(e, l, upgradeList);
     }
-    
-    private CurrentGame(GameEpoch e, GameLevel l, File upgradeList) throws IOException {
+
+    private CurrentGame(GameWorld e, GameLevel l, File upgradeList) throws IOException {
         this.epoch = e;
         this.level = l;
-        towerUpgrades=null;
+        this.nexus = new Nexus();
+        this.gameMap = this.level.getMap();
+        towerUpgrades = null;
+        manager = new EntityManagerThread();
     }
-    
-    
+
+    public Nexus getNexus() {
+        return this.nexus;
+    }
+
+    public com.dzp.game.mechanics.Map getMap() {
+        return this.gameMap;
+    }
     
     public GameLevel getLevel() {
         return this.level;
-    }    
-    public GameEpoch getEpoch() {
+    }
+
+    public GameWorld getEpoch() {
         return this.epoch;
     }
+
     public static CurrentGame getCurrentGame() {
         return CurrentGame.game;
     }
-    
+
 }

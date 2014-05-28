@@ -2,20 +2,18 @@ package com.dzp.game.mechanics;
 
 public class Nexus {
     
-    private static final int maxHP;
-    private static int HP;
+    private static final int maxHP = 3;
+    private int HP;
     
-    static {
-        maxHP = 500;
+    public Nexus() {
         HP = maxHP;
     }
     
-    public static void initialize() {
-        
-    }
-    
-    public static boolean isAlive() {
+    public boolean isAlive() {
         return HP>0;
     }
     
+    public void strike() {
+        
+    }
 }
