@@ -1,3 +1,6 @@
 # view AndroidManifest.xml #generated:7
 -keep class com.dzp.game.DZPgame { <init>(...); }
 
+# onClick res/layout/main.xml #generated:17
+-keepclassmembers class * { *** change(...); }
+

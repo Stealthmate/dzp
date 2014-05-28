@@ -3,6 +3,7 @@
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/Dimension.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/Rectangle.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/BuildConfig.class \
+/home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/R$xml.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/R.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/Occupator.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/Nexus.class \
@@ -13,6 +14,7 @@
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/WavePath.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/StrongerBasicMob.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/FastMob.class \
+/home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/Mob$1.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/BasicMob.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/StrongerFastMob.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/mobs/SiegeMob.class \
@@ -22,18 +24,21 @@
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/LongRangeSpecialTower.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/NovaSpecialTower.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/PigMainTower.class \
+/home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/Tower$1.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/PolecatMainTower.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/ShortRangeSpecialTower.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/towers/PandaMainTower.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/Tile.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/Map.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/mechanics/EntityManagerThread.class \
+/home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/R$id.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/DZPgame.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/resourceHandler/CurrentGame.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/resourceHandler/GameEpoch.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/resourceHandler/GameLevel.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/resourceHandler/ResourceLoader.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/resourceHandler/FileNames.class \
+/home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/R$drawable.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/R$layout.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/gui/Run$1.class \
 /home/madara1233/The Legend Of DZP/dzp/The Legend of DZP/bin/classes/com/dzp/game/gui/Run.class \
