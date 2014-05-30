@@ -20,7 +20,7 @@ public class AirMob extends Mob{
     }
     
     @Override
-    protected void act(int collision) {
+    protected void act() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -28,5 +28,7 @@ public class AirMob extends Mob{
     protected void drawAct() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
     
 }

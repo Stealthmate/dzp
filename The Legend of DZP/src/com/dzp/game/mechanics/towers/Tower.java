@@ -6,22 +6,23 @@ import com.dzp.game.resourceHandler.CurrentGame;
 
 public abstract class Tower {
 
+    //Properties
     protected static final int maxLevel = 5;
     protected final Point position;
     protected final int maxCharge;
     protected final int cost;
-    protected final int damage;
-    protected final int frequency;
     protected final Bitmap skin;
+    protected int frequency;
+    protected int damage;
     protected int range;
     protected int level;
     protected int charge;
+    //End of Properties
 
     protected Tower(
             Point position,
             int range,
             int level,
-            int charge,
             int maxCharge,
             int cost,
             int frequency,
@@ -36,7 +37,7 @@ public abstract class Tower {
         this.skin = skin;
         setLevel(level);
         setRange(range);
-        setCharge(charge);
+        setCharge(maxCharge);
     }
 
     ///Set parameters
@@ -94,7 +95,7 @@ public abstract class Tower {
         for (int x = 0; x <= range; x++) {
             for (int y = 0; y <= range; y++) {
                 if (x * x + y * y <= range * range) {
-
+                    
                 }
             }
         }

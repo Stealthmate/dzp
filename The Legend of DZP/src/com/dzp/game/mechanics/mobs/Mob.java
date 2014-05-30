@@ -7,9 +7,10 @@ import com.dzp.game.resourceHandler.CurrentGame;
 
 public abstract class Mob {
 
-    protected static final int NO_COLLIDE = 0;
-    protected static final int COLLIDE_EMPTY = 1;
-    protected static final int COLLIDE_NEXUS = 2;
+    //Pathfinding states
+    protected static final int NO_COLLIDE = 0; 
+    protected static final int COLLIDE_ENV = 1; 
+    protected static final int COLLIDE_NEXUS = 2; 
 
     private final int speed;
     private final int maxHP;
@@ -28,14 +29,14 @@ public abstract class Mob {
         setPreviousPosition(null);
     }
 
-    protected abstract void act(int collision);
+    protected abstract void act();
 
     protected abstract void drawAct();
 
     public void action() {
 
         if (!canMove) {
-            act(COLLIDE_EMPTY);
+            return;
         }
 
         int x = this.position.x;
@@ -61,12 +62,12 @@ public abstract class Mob {
             if (results[i] == NO_COLLIDE) {
 
                 move(d[i].x, d[i].y);
-                act(results[i]);
+                act();
             }
         }
         for (int i = 0; i <= 3; i++) {
             if (results[i] == COLLIDE_NEXUS) {
-                act(results[i]);
+                strike();
             }
         }
     }
@@ -77,21 +78,24 @@ public abstract class Mob {
         drawMovement();
     }
 
+    private void strike() {
+        CurrentGame.getCurrentGame().getNexus().strike();
+        this.despawn();
+    }
+    
     private void drawMovement() {
-
+        
     }
 
     public void despawn() {
-        this.HP = 0;
-        this.position = null;
-        this.prevPos = null;
+        CurrentGame.getCurrentGame().manager.despawnMob(this);
     }
 
     private int willCollide(int x, int y) {
         switch (CurrentGame.getCurrentGame().getMap().getTile(x, y).getOccupator()) {
             case EMPTY:
             case IMMOVABLE:
-                return COLLIDE_EMPTY;
+                return COLLIDE_ENV;
             case NEXUS:
                 return COLLIDE_NEXUS;
             default:

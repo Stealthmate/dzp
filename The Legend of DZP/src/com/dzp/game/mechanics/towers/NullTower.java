@@ -20,7 +20,7 @@ public class NullTower extends Tower {
             int frequency,
             int damage,
             Bitmap skin) {
-        super(position, range, level, maxCharge, maxCharge, cost, frequency, damage, skin);
+        super(position, range, level, maxCharge, cost, frequency, damage, skin);
     }
     
     ///Set parameters

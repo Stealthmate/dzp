@@ -22,7 +22,7 @@ public class Formation extends Mob{
     }
     
     @Override
-    protected void act(int collision) {
+    protected void act() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
