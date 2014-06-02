@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dzp.game;
+package com.dzp.game.gui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +15,8 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.view.MotionEvent;
 import android.view.View;
+import com.dzp.game.DZPgame;
+import com.dzp.game.R;
 
 /**
  *

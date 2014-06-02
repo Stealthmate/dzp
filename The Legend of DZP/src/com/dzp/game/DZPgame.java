@@ -1,5 +1,7 @@
 package com.dzp.game;
 
+import com.dzp.game.gui.TitleScreen;
+import com.dzp.game.gui.GameView;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;

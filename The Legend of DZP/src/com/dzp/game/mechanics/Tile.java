@@ -1,7 +1,7 @@
 package com.dzp.game.mechanics;
 
 import android.graphics.Point;
-import com.dzp.game.Dimension;
+import com.dzp.game.gui.Dimension;
 
 public class Tile {
 

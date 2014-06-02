@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.dzp.game;
+package com.dzp.game.gui;
 
 /**
  *
