@@ -10,13 +10,11 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.view.MotionEvent;
 import android.view.View;
 import com.dzp.game.DZPgame;
-import com.dzp.game.R;
 
 /**
  *
@@ -24,16 +22,16 @@ import com.dzp.game.R;
  */
 public class TitleScreen extends View {
 
-    private final static Dimension btnDimensions = new Dimension(100, 30);
+    private final static Dimension btnDimensions = new Dimension(640/3, 241/3);
     private final static int btnX = DZPgame.screenWidth / 2 - btnDimensions.width / 2;
-    private final static int btnY = DZPgame.screenHeight / 9;
-    private final static Point startBtnPos = new Point(btnX, 2 * btnY);
-    private final static Point optionsBtnPos = new Point(btnX, 4 * btnY);
-    private final static Point scoreBtnPos = new Point(btnX, 6 * btnY);
+    private final static int btnY = DZPgame.screenHeight/30;
+    private final static Point startBtnPos = new Point(btnX, 6 * btnY);
+    private final static Point optionsBtnPos = new Point(btnX, 13 * btnY);
+    private final static Point aboutBtnPos = new Point(btnX, 20 * btnY);
 
     private final GameButton start;
     private final GameButton options;
-    private final GameButton score;
+    private final GameButton about;
     private final Bitmap background;
     private static final Paint drawPaint = new Paint();
     private static final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
@@ -92,9 +90,9 @@ public class TitleScreen extends View {
 
         this.background = background;
         
-        Bitmap buttonImg = ((BitmapDrawable) getResources().getDrawable(R.drawable.screen1)).getBitmap();
-        
+        Bitmap buttonImg = (Bitmap) DZPgame.get(DZPgame.START_BTN_IMG);
         buttonImg = DZPgame.getResizedBitmap(buttonImg, btnDimensions.width, btnDimensions.height);
+        //buttonImg = DZPgame.getResizedBitmap(buttonImg, btnDimensions.width, btnDimensions.height);
 
         start = new GameButton(getContext(), buttonImg, startBtnPos.x, startBtnPos.y) {
 
@@ -103,17 +101,19 @@ public class TitleScreen extends View {
                 tg.startTone(ToneGenerator.TONE_PROP_BEEP);
             }
         };
-
+        buttonImg = (Bitmap) DZPgame.get(DZPgame.OPTIONS_BTN_IMG);
+        buttonImg = DZPgame.getResizedBitmap(buttonImg, btnDimensions.width, btnDimensions.height);
         options = new GameButton(getContext(), buttonImg, optionsBtnPos.x, optionsBtnPos.y) {
 
             @Override
             protected void act() { 
-                tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+                tg.startTone(ToneGenerator.TONE_CDMA_ANSWER);
             }
 
         };
-
-        score = new GameButton(getContext(), buttonImg, scoreBtnPos.x, scoreBtnPos.y) {
+        buttonImg = (Bitmap) DZPgame.get(DZPgame.ABOUT_BTN_IMG);
+        buttonImg = DZPgame.getResizedBitmap(buttonImg, btnDimensions.width, btnDimensions.height);
+        about = new GameButton(getContext(), buttonImg, aboutBtnPos.x, aboutBtnPos.y) {
 
             @Override
             protected void act() {
@@ -128,7 +128,7 @@ public class TitleScreen extends View {
         canvas.drawBitmap(background, 0, 0, drawPaint);
         start.draw(canvas);
         options.draw(canvas);
-        score.draw(canvas);
+        about.draw(canvas);
     }
 
     @Override
@@ -138,8 +138,8 @@ public class TitleScreen extends View {
             start.onTouchEvent(e);
         } else if (options.isInHitbox(e.getX(), e.getY())) {
             options.onTouchEvent(e);
-        } else if (score.isInHitbox(e.getX(), e.getY())) {
-            score.onTouchEvent(e);
+        } else if (about.isInHitbox(e.getX(), e.getY())) {
+            about.onTouchEvent(e);
         }
         return true;
     }

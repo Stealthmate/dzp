@@ -35,7 +35,7 @@ public class ResourceLoader {
                 (BufferedInputStream) resourceURL.openStream()));
 
         //Bitmap icon = new Bitmap(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
-        titleBackground = (Bitmap) DZPgame.get("titleBackground");
+        titleBackground = (Bitmap) DZPgame.get(DZPgame.TITLE_BACKGROUND);
         /*titleBackground = new Bitmap(
                 icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, Bitmap.S));
 */

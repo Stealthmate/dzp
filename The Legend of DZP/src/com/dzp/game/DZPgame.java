@@ -7,41 +7,40 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import java.util.HashMap;
 
 public class DZPgame extends Activity {
 
-    /**
-     * Called when the activity is first created.
-     */
+    //Resource IDs
+    public static final int TITLE_BACKGROUND = 1;
+    public static final int START_BTN_IMG = 2;
+    public static final int OPTIONS_BTN_IMG = 3;
+    public static final int ABOUT_BTN_IMG = 4;
+    
     private ImageView image;
-    private int current = 0;
     private final BitmapDrawable[] backgrounds = new BitmapDrawable[2];
-    private static final HashMap<String, Object> resources = new HashMap();
+    private static final HashMap<Integer, Object> resources = new HashMap();
     private GameView gameScreen;
     private Bitmap stfu;
     public static int screenWidth, screenHeight;
 
-    public static Object get(String id) {
+    public static Object get(int id) {
         return resources.get(id);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+        loadResources();
         DisplayMetrics dimension = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dimension);
         screenWidth = dimension.widthPixels;
         screenHeight = dimension.heightPixels;
 
-        Bitmap bg = ((BitmapDrawable)getResources().getDrawable(R.drawable.screen2)).getBitmap();
+        Bitmap bg = (Bitmap) get(TITLE_BACKGROUND);
         bg = getResizedBitmap(bg, screenWidth, screenHeight);
         TitleScreen ts = new TitleScreen(this, bg);
         this.setContentView(ts);
@@ -80,9 +79,14 @@ public class DZPgame extends Activity {
 
     private boolean loadResources() {
         resources.put(
-                "titleBackground",
+                TITLE_BACKGROUND,
                 ((BitmapDrawable) getResources().getDrawable(R.drawable.title_background)).getBitmap());
-
+        resources.put(START_BTN_IMG,
+                ((BitmapDrawable) getResources().getDrawable(R.drawable.start_btn_img)).getBitmap());
+        resources.put(OPTIONS_BTN_IMG,
+                ((BitmapDrawable) getResources().getDrawable(R.drawable.options_btn_img)).getBitmap());
+        resources.put(ABOUT_BTN_IMG,
+                ((BitmapDrawable) getResources().getDrawable(R.drawable.about_btn_img)).getBitmap());
         return true;
     }
 
@@ -101,41 +105,5 @@ public class DZPgame extends Activity {
         return resizedBitmap;
     }
     int move = 0;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        String DEBUG_TAG = "log";
-        int action = MotionEventCompat.getActionMasked(event);
-
-        switch (action) {
-            case (MotionEvent.ACTION_DOWN):
-                move = 0;
-                return true;
-            case (MotionEvent.ACTION_MOVE): {
-                Log.d(DEBUG_TAG, "MOVE!!");
-                move++;
-            }
-            return true;
-            case (MotionEvent.ACTION_UP): {
-                Log.d(DEBUG_TAG, move + "");
-                if (move < 5) {
-                    change(null);
-                }
-                move = 0;
-
-            }
-            return true;
-            case (MotionEvent.ACTION_CANCEL):
-                Log.d(DEBUG_TAG, "Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE):
-                Log.d(DEBUG_TAG, "Movement occurred outside bounds "
-                        + "of current screen element");
-                return true;
-            default:
-                return super.onTouchEvent(event);
-        }
-    }
 
 }
