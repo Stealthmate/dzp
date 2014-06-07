@@ -1,7 +1,6 @@
 package com.dzp.game.resourceHandler;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class GameWorld {

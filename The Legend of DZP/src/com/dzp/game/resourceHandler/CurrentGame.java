@@ -2,7 +2,6 @@ package com.dzp.game.resourceHandler;
 
 import com.dzp.game.mechanics.EntityManagerThread;
 import com.dzp.game.mechanics.Nexus;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -16,11 +15,11 @@ public class CurrentGame {
     private final Map<String, Integer> towerUpgrades;
     public final EntityManagerThread manager;
 
-    public static void createGame(GameWorld e, GameLevel l, File upgradeList) throws IOException {
-        CurrentGame.game = new CurrentGame(e, l, upgradeList);
+    public static void createGame(GameWorld e, GameLevel l) throws IOException {
+        CurrentGame.game = new CurrentGame(e, l);
     }
 
-    private CurrentGame(GameWorld e, GameLevel l, File upgradeList) throws IOException {
+    private CurrentGame(GameWorld e, GameLevel l) throws IOException {
         this.epoch = e;
         this.level = l;
         this.nexus = new Nexus();

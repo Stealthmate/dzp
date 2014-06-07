@@ -1,19 +1,17 @@
 package com.dzp.game.resourceHandler;
 
-import java.net.URL;
-import java.util.Map;
+import android.graphics.Bitmap;
 import android.widget.ImageView;
+import java.util.ArrayList;
 
 public class GameLevel {
 
-    public static Map<GameLevel, String> levels;
     private final com.dzp.game.mechanics.Map mapConfig;
 
-    public GameLevel(URL mapImage, URL mapConfig) throws Exception {
+    public GameLevel(Bitmap mapImage, String[] mapConfig) throws Exception {
         
         this.mapConfig = new com.dzp.game.mechanics.Map(mapConfig);
         
-        //ImageView m = new ImageView(mapImage)
     }
 
     public com.dzp.game.mechanics.Map getMap () {

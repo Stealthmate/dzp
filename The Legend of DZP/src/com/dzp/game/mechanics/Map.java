@@ -1,10 +1,6 @@
 package com.dzp.game.mechanics;
 
 import android.graphics.Point;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Map {
@@ -13,17 +9,17 @@ public class Map {
     private static final int height = 12;
     private final ArrayList<ArrayList<Tile>> tiles;
 
-    public Map(URL mapConfig) throws Exception {
+    public Map(String[] mapConfig) throws Exception {
         this.tiles = new ArrayList();
         
-        BufferedReader readResource = new BufferedReader(new InputStreamReader((InputStream) mapConfig.getContent()));
-        String line = readResource.readLine();
+        System.out.println(mapConfig.length);
+        String line = mapConfig[0];
         int x = Integer.parseInt(line.substring(0, line.indexOf(' ')));
         int y = Integer.parseInt(line.substring(line.indexOf(' ') + 1));
         
         for (int i = 0; i <= x - 1; i++) {
             this.tiles.add(new ArrayList<Tile>());
-            line = readResource.readLine();
+            line = mapConfig[i+1];
             int begin = 0;
             for (int j = 0; j <= y - 1; j++) {
                 int state = 0;

@@ -8,21 +8,49 @@
 package com.dzp.game;
 
 public final class R {
+    public static final class array {
+        public static final int dim1_map1=0x7f040000;
+        public static final int dim1_map2=0x7f040001;
+        public static final int dim1_map3=0x7f040002;
+        public static final int dim1_map4=0x7f040003;
+    }
     public static final class attr {
     }
     public static final class drawable {
         public static final int about_btn_img=0x7f020000;
-        public static final int options_btn_img=0x7f020001;
-        public static final int start_btn_img=0x7f020002;
-        public static final int title_background=0x7f020003;
+        public static final int choose_dim_btn_img=0x7f020001;
+        public static final int dim1_map1=0x7f020002;
+        public static final int dim1_map2=0x7f020003;
+        public static final int dim1_map3=0x7f020004;
+        public static final int dim1_map4=0x7f020005;
+        public static final int dim1_map5=0x7f020006;
+        public static final int map1=0x7f020007;
+        public static final int options_btn_img=0x7f020008;
+        public static final int skin1=0x7f020009;
+        public static final int skin2=0x7f02000a;
+        public static final int skin3=0x7f02000b;
+        public static final int skin4=0x7f02000c;
+        public static final int skin5=0x7f02000d;
+        public static final int start_btn_img=0x7f02000e;
+        public static final int title_background=0x7f02000f;
     }
     public static final class id {
-        public static final int main_layout=0x7f050000;
+        public static final int about_btn=0x7f060005;
+        public static final int choose_dim_btn=0x7f060002;
+        public static final int credits_text=0x7f060001;
+        public static final int main_layout=0x7f060000;
+        public static final int options_btn=0x7f060004;
+        public static final int start_btn=0x7f060003;
     }
     public static final class layout {
         public static final int main=0x7f030000;
+        public static final int screen_about=0x7f030001;
+        public static final int screen_options=0x7f030002;
+        public static final int screen_start=0x7f030003;
+        public static final int title_screen=0x7f030004;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
+        public static final int app_name=0x7f050000;
+        public static final int credits=0x7f050001;
     }
 }

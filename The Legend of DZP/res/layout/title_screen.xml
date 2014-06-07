@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/title_background">
+    <Button android:background="@drawable/start_btn_img"
+            android:id="@+id/start_btn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+    android:onClick="start"/>
+    <Button android:background="@drawable/options_btn_img"
+            android:id="@+id/options_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/start_btn"/>
+    <Button android:background="@drawable/about_btn_img"
+            android:id="@+id/about_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/options_btn"/>
+</RelativeLayout>

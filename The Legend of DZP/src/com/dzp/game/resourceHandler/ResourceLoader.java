@@ -1,7 +1,6 @@
 package com.dzp.game.resourceHandler;
 
 import android.graphics.Bitmap;
-import com.dzp.game.DZPgame;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,11 +33,6 @@ public class ResourceLoader {
                 new InputStreamReader(
                 (BufferedInputStream) resourceURL.openStream()));
 
-        //Bitmap icon = new Bitmap(cl.getResource(FileNames.getPathTo(FileNames.backgroundImage)));
-        titleBackground = (Bitmap) DZPgame.get(DZPgame.TITLE_BACKGROUND);
-        /*titleBackground = new Bitmap(
-                icon.getScaledInstance(icon.getWidth(), icon.getHeight() - 64, Bitmap.S));
-*/
         synchronized (loaded) {
             progress += 60;
             loaded.notifyAll();
@@ -62,7 +56,7 @@ public class ResourceLoader {
     }
 
     public static void createGame(int e, int l) throws IOException {
-        CurrentGame.createGame(epoches.get(e), epoches.get(e).getLevel(l), null);/* Not finished */
+        CurrentGame.createGame(epoches.get(e), epoches.get(e).getLevel(l));/* Not finished */
     }
 
     ///Read
@@ -82,8 +76,10 @@ public class ResourceLoader {
     }
 
     private static GameLevel readLevel(int n, int e) throws Exception {
-        return new GameLevel(
+        /*return new GameLevel(
                 cl.getResource(FileNames.getPathTo(e, n, FileNames.mapImage)),
-                cl.getResource(FileNames.getPathTo(e, n, FileNames.mapConfig)));
+                cl.getResource(FileNames.getPathTo(e, n, FileNames.mapConfig)));*/
+        return null;
     }
+       
 }

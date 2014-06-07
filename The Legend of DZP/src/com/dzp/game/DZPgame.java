@@ -1,31 +1,44 @@
 package com.dzp.game;
 
-import com.dzp.game.gui.TitleScreen;
-import com.dzp.game.gui.GameView;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
+import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
+import com.dzp.game.gui.GameView;
+import com.dzp.game.resourceHandler.CurrentGame;
+import com.dzp.game.resourceHandler.GameLevel;
+import com.dzp.game.resourceHandler.GameWorld;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class DZPgame extends Activity {
+public class DZPgame extends Activity{
 
     //Resource IDs
-    public static final int TITLE_BACKGROUND = 1;
-    public static final int START_BTN_IMG = 2;
-    public static final int OPTIONS_BTN_IMG = 3;
-    public static final int ABOUT_BTN_IMG = 4;
-    
+    public static final int DIMENSIONS = 5;
+    public static final int LEVELS = 4;
+    //up to 600 reserved
+    public static final int DZP_ICON = 1001;
+    public static final int EXIT_BOX_IMG = 1002;
+
     private ImageView image;
-    private final BitmapDrawable[] backgrounds = new BitmapDrawable[2];
+    public static boolean inGame = false;
     private static final HashMap<Integer, Object> resources = new HashMap();
-    private GameView gameScreen;
-    private Bitmap stfu;
+    private GameView game;
+    private static ArrayList<GameWorld> worlds = new ArrayList();
     public static int screenWidth, screenHeight;
+    private int dim = 1, lvl = 1;
 
     public static Object get(int id) {
         return resources.get(id);
@@ -34,67 +47,54 @@ public class DZPgame extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Display display = getWindowManager().getDefaultDisplay();
+        screenWidth = display.getWidth();
+        screenHeight = display.getHeight();
         loadResources();
-        DisplayMetrics dimension = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dimension);
-        screenWidth = dimension.widthPixels;
-        screenHeight = dimension.heightPixels;
-
-        Bitmap bg = (Bitmap) get(TITLE_BACKGROUND);
-        bg = getResizedBitmap(bg, screenWidth, screenHeight);
-        TitleScreen ts = new TitleScreen(this, bg);
-        this.setContentView(ts);
-        
-        //FrameLayout ll = (FrameLayout) View.inflate(this, R.layout.main, null);
-        
-        /*
-        backgrounds[0] = ((BitmapDrawable) getResources().getDrawable(R.drawable.title_background));
-        stfu = getResizedBitmap(backgrounds[0].getBitmap());
-        backgrounds[1] = ((BitmapDrawable) getResources().getDrawable(R.drawable.title_background));
-        loadResources();
-        Paint paint = new Paint();
-        setContentView(R.layout.title);
-        gameScreen = new GameView(this);
-        //this.setContentView(ll);
-
-        GameView.gameImage = stfu;
-        gameScreen.invalidate();
-        gameScreen.setVisibility(View.VISIBLE);
-        ll.addView(gameScreen);
-
-        ll.invalidate();*/
-
+        this.setContentView(R.layout.title_screen);
+        initializeButtons();
     }
 
     public void change(View view) {
-        /*current = 1 - current;
-        stfu = getResizedBitmap(backgrounds[current].getBitmap());
-        GameView.gameImage = stfu;
-        gameScreen.invalidate();*/
-        //ImageView img = (ImageView) findViewById(R.id.bg);
-        //img.setBackgroundResource(R.drawable.bg_animation);
-        //((AnimationDrawable)img.getBackground()).start();
         System.out.println("Go!");
     }
 
     private boolean loadResources() {
-        resources.put(
-                TITLE_BACKGROUND,
-                ((BitmapDrawable) getResources().getDrawable(R.drawable.title_background)).getBitmap());
-        resources.put(START_BTN_IMG,
-                ((BitmapDrawable) getResources().getDrawable(R.drawable.start_btn_img)).getBitmap());
-        resources.put(OPTIONS_BTN_IMG,
-                ((BitmapDrawable) getResources().getDrawable(R.drawable.options_btn_img)).getBitmap());
-        resources.put(ABOUT_BTN_IMG,
-                ((BitmapDrawable) getResources().getDrawable(R.drawable.about_btn_img)).getBitmap());
+        int wid, lid;
+
+        for (int i = 0; i <= 0; i++) {
+            wid = getResources().getIdentifier("skin" + (i + 1), "drawable", getPackageName());
+            resources.put((i + 1), ((BitmapDrawable) getResources().getDrawable(wid)).getBitmap());
+            for (int j = 0; j <= LEVELS - 1; j++) {
+                System.err.println("dim" + (i + 1) + "_map" + (j + 1));
+                lid = getResources()
+                        .getIdentifier("dim" + (i + 1) + "_map" + (j + 1), "array", getPackageName());
+                String[] mapConfig = getResources().getStringArray(lid);
+                resources.put((i + 1) * 100 + j + 1, mapConfig);
+                
+                lid = getResources()
+                        .getIdentifier("dim" + (i + 1) + "_map" + (j + 1), "drawable", getPackageName());
+                Bitmap map = ((BitmapDrawable)getResources().getDrawable(lid)).getBitmap();
+                resources.put((i+1)*100 + (j+1)*10, map);
+            }
+        }
+
+        ArrayList<GameLevel> gl = new ArrayList();
+        try {
+            gl.add(new GameLevel((Bitmap) get(11), (String[]) get(101)));
+            worlds.add(new GameWorld((Bitmap) get(1), gl));
+        } catch (Exception ex) {
+            Logger.getLogger(DZPgame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return true;
     }
 
-    public static Bitmap getResizedBitmap(Bitmap bm, int w, int h) {
+    public static Bitmap getResizedBitmap(Bitmap bm, float w, float h) {
         int bmwidth = bm.getWidth();
         int bmheight = bm.getHeight();
-        float scaleWidth = ((float) w) / bmwidth;
-        float scaleHeight = ((float) h) / bmheight;
+        float scaleWidth = w / bmwidth;
+        float scaleHeight =  h / bmheight;
         // CREATE A MATRIX FOR THE MANIPULATION
         Matrix matrix = new Matrix();
         // RESIZE THE BIT MAP
@@ -105,5 +105,53 @@ public class DZPgame extends Activity {
         return resizedBitmap;
     }
     int move = 0;
+
+    private void initializeButtons() {
+        Button start = (Button) findViewById(R.id.start_btn);
+        start.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                startGame();
+                //DZPgame.this.setContentView(R.layout.screen_start);
+            }
+
+        });
+        Button options = (Button) findViewById(R.id.options_btn);
+        options.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                DZPgame.this.setContentView(R.layout.screen_options);
+            }
+
+        });
+        Button about = (Button) findViewById(R.id.about_btn);
+        about.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                System.out.println("About");
+                DZPgame.this.setContentView(R.layout.screen_about);
+            }
+
+        });
+    }
+
+    private void startGame() {
+        try {
+            CurrentGame.createGame(worlds.get(0), worlds.get(0).getLevel(0));
+            game = new GameView(this);
+            this.setContentView(game);
+            inGame = true;
+        } catch (IOException ex) {
+            Logger.getLogger(DZPgame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CDA", "onBackPressed Called");
+        if (inGame) {
+            game.showExitBox();
+        }
+    }
 
 }
