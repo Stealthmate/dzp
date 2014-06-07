@@ -2,13 +2,11 @@ package com.dzp.game;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
