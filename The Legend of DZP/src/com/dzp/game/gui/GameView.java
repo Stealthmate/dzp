@@ -10,21 +10,30 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import com.dzp.game.DZPgame;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends SurfaceView implements
+        SurfaceHolder.Callback {
 
     public static Bitmap gameImage = Bitmap.createBitmap(480, 320, Bitmap.Config.ALPHA_8);
+    private static ImageView screen;
     private static Bitmap map;
     private final View exitBox;
     private final MenuBar menu;
     private SurfaceHolder holder;
     private Renderer renderer;
     private boolean RendererIsRunning = false;
+    private boolean over = false;
+//<editor-fold desc="Renderer, MenuBar and Surface functions">
 
     private class Renderer extends Thread {
 
@@ -37,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         @Override
         public void run() {
-            while (true) {
+            while (!over) {
                 synchronized (sh) {
                     Canvas c = sh.lockCanvas();
                     if (c != null) {
@@ -63,7 +72,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void surfaceDestroyed(SurfaceHolder sh) {
         if (RendererIsRunning) {
-            renderer.destroy();
+            over = true;
         }
     }
 
@@ -99,28 +108,102 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
     }
+//</editor-fold>
+    private float x = 0, y = 0;
+
+    private class GestureListener extends SimpleOnGestureListener {
+
+        private static final float slideSpeed = 8;
+        private static final int box = 5;
+        private float xSrc;
+        private float ySrc;
+
+        @Override
+        public boolean onDown(MotionEvent me) {
+            System.out.println("Down");
+            xSrc = me.getX();
+            ySrc = me.getY();
+            prevDX = 0;
+            prevDY = 0;
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent me) {
+            System.out.println("SingleTapUp");
+            return true;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent me) {
+            System.out.println("long");
+            zoomOut();
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent me) {
+            System.out.println("wtf");
+            zoomIn();
+            return true;
+        }
+
+        float prevDX, prevDY;
+
+        @Override
+        public boolean onScroll(MotionEvent src, MotionEvent me, float dx, float dy) {
+
+            //System.out.println(GameView.this.getWidth());
+            float x = me.getX();
+            float y = me.getY();
+            float newX = GameView.this.x, newY = GameView.this.y;
+            //System.out.println(gameImage.getWidth());
+            if ((dx < -box || dx > box)
+                    && (-dx + newX <= 0 && -dx + newX + gameImage.getWidth() >= GameView.this.getWidth())) {
+                newX -= dx;
+                prevDX = dx;
+            }
+
+            if ((dy < -box || dy > box)
+                    && (-dy + newY <= 0 && -dy + newY + gameImage.getHeight() >= GameView.this.getHeight()))  {
+                newY -= dy;
+                prevDY = dy;
+            }
+            GameView.this.x = newX;
+            GameView.this.y = newY;
+            //System.err.println(newX + " " + newY);
+            GameView.this.invalidate();
+
+            return true;
+        }
+    }
+
+    private final GestureListener listener;
+    private final GestureDetector detector;
 
     public GameView(Context context) {
         super(context);
         getHolder().addCallback(this);
         gameImage = (Bitmap) DZPgame.get(110);
+
+        listener = new GestureListener();
+        detector = new GestureDetector(context, listener);
+        this.setOnTouchListener(new OnTouchListener() {
+
+            public boolean onTouch(View view, MotionEvent me) {
+                return detector.onTouchEvent(me);
+            }
+
+        });
+
         map = gameImage;
+        screen = new ImageView(context) {
 
-        this.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View view) {
-                zoomIn();
+            @Override
+            protected void onDraw(Canvas canvas) {
+                canvas.drawBitmap(gameImage, GameView.this.x, GameView.this.y, paint);
             }
-
-        });
-        this.setOnLongClickListener(new OnLongClickListener() {
-
-            public boolean onLongClick(View view) {
-                zoomOut();
-                return true;
-            }
-
-        });
+        };
+        screen.setImageBitmap(gameImage);
 
         exitBox = new View(context) {
             @Override
@@ -139,16 +222,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(gameImage, 0, 0, paint);
+        screen.draw(canvas);
         menu.draw(canvas);
     }
 
     private void zoomOut() {
+        if(gameImage.getWidth()/1.5f<this.getWidth() || gameImage.getHeight()/1.5f<this.getHeight()) return;
         gameImage = DZPgame.getResizedBitmap(map, gameImage.getWidth() / 1.5f, gameImage.getHeight() / 1.5f);
+        this.x = 0;
+        this.y = 0;
     }
 
     private void zoomIn() {
+        if(gameImage.getWidth()*1.5f>this.getWidth()*2 || gameImage.getHeight()*1.5f>this.getHeight()*2) return;
         gameImage = DZPgame.getResizedBitmap(map, gameImage.getWidth() * 1.5f, gameImage.getHeight() * 1.5f);
+        
     }
 
     public void showExitBox() {
